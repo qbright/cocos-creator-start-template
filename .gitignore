@@ -5,7 +5,10 @@
 /library/
 /temp/
 /local/
-/build/
+
+/build/jsb-link/*
+!/build/jsb-link/frameworks/
+
 
 #/////////////////////////////////////////////////////////////////////////////
 # npm files
