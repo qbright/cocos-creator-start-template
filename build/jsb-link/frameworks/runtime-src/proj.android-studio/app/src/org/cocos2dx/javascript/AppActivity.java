@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Configuration;
 
+
 public class AppActivity extends Cocos2dxActivity {
 
     @Override
@@ -46,6 +47,9 @@ public class AppActivity extends Cocos2dxActivity {
             // Don't need to finish it again since it's finished in super.onCreate .
             return;
         }
+
+        AdManager.getInstance().init(this);
+
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
 
@@ -79,7 +83,8 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
+        // Workaround in
+        // https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
         if (!isTaskRoot()) {
             return;
         }

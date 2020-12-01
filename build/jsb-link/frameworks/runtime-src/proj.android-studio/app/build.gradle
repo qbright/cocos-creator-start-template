@@ -130,4 +130,6 @@ dependencies {
     implementation fileTree(dir: "/Applications/CocosCreator/Creator/2.4.3/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-ads:18.0.0'
+
 }

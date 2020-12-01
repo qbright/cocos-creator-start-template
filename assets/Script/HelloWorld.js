@@ -19,4 +19,16 @@ cc.Class({
     update: function (dt) {
 
     },
+
+    showInterstitialAd: function () {
+        console.log('showInterstitialAd');
+        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AdManager", "showInterstitialAd", "()V");
+
+    },
+
+    showRewardAd: function () {
+        console.log('showRewardAd');
+        jsb.reflection.callStaticMethod("org/cocos2dx/javascript/AdManager", "showRewardAd", "()V");
+
+    }
 });

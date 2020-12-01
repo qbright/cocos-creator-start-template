@@ -17,7 +17,9 @@
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data android:name="android.app.lib_name"
                    android:value="cocos2djs" />
-        
+         <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2178561732863118~5126041893"/> 
         <activity
             android:name="org.cocos2dx.javascript.AppActivity"
             android:screenOrientation="portrait"
