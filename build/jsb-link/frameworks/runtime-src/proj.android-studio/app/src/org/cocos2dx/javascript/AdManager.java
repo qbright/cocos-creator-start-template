@@ -1,12 +1,21 @@
 package org.cocos2dx.javascript;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
@@ -24,6 +33,10 @@ public class AdManager {
     private InterstitialAd mInterstitialAd;
     private RewardedAd rewardedAd;
 
+    private LinearLayout bannerLayout;
+    private AdView mAdView;
+
+
     public static AdManager getInstance() {
         if (null == mInstace) {
             mInstace = new AdManager();
@@ -37,14 +50,11 @@ public class AdManager {
 
         MobileAds.initialize(context, APP_ID);
 
-
         mInterstitialAd = new InterstitialAd(mainActive);
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-
-        rewardedAd = new RewardedAd(mainActive,
-                "ca-app-pub-3940256099942544/5224354917");
+        rewardedAd = new RewardedAd(mainActive, "ca-app-pub-3940256099942544/5224354917");
 
         RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
             @Override
@@ -59,11 +69,56 @@ public class AdManager {
         };
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
 
+        this.loadBannerAd();
+
+    }
+
+    private void loadBannerAd() {
+        bannerLayout = new LinearLayout(this.mainActive);
+        bannerLayout.setOrientation(LinearLayout.VERTICAL);
+
+        mAdView = new AdView(this.mainActive);
+//        mAdView.setAdSize(AdSize.SMART_BANNER);
+        mAdView.setAdSize(this.getAdSize());
+        mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+        AdRequest.Builder adRequesetBuilder = new AdRequest.Builder();
+
+        adRequesetBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+
+        bannerLayout.addView(mAdView);
+
+        mAdView.loadAd(adRequesetBuilder.build());
+
+        AppActivity activity = (AppActivity) this.mainActive;
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.BOTTOM;
+        activity.addContentView(bannerLayout, params);
+        bannerLayout.setVisibility(View.VISIBLE);
+
+
+    }
+
+    private AdSize getAdSize() {
+
+        Display display = ((Activity) this.mainActive).getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+
+        int adWidth = (int) (widthPixels / density);
+
+        // Step 3 - Get adaptive ad size and return for setting on the ad view.
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this.mainActive, adWidth);
+
     }
 
     public static void showRewardAd() {
         AppActivity mActivity = (AppActivity) AdManager.getInstance().mainActive;
-        //一定要确保在UI线程操作
+        // 一定要确保在UI线程操作
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -97,14 +152,12 @@ public class AdManager {
             }
         });
 
-
     }
-
 
     public static void showInterstitialAd() {
 
         AppActivity mActivity = (AppActivity) AdManager.getInstance().mainActive;
-        //一定要确保在UI线程操作
+        // 一定要确保在UI线程操作
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -115,7 +168,6 @@ public class AdManager {
                 }
             }
         });
-
 
     }
 }
