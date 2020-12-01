@@ -8,8 +8,9 @@
 
 /build/jsb-link/*
 !/build/jsb-link/frameworks/
-
-
+/build/jsb-link/frameworks/runtime-src/proj.android-studio/*/.externalNativeBuild/
+/build/jsb-link/frameworks/runtime-src/proj.android-studio/*/build/
+build/jsb-link/frameworks/runtime-src/proj.android-studio/game/property(interface org.gradle.api.file.Directory, fixed(class org.gradle.api.internal.file.DefaultFilePropertyFactory$FixedDirectory, /
 #/////////////////////////////////////////////////////////////////////////////
 # npm files
 #/////////////////////////////////////////////////////////////////////////////
