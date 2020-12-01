@@ -1,0 +1,8 @@
+{
+  "engine": "cocos2d-html5",
+  "packages": "packages",
+  "version": "2.4.3",
+  "name": "cocos-creator-start-template",
+  "id": "9312eb56-b593-4f81-8601-5d9ec1a76b92",
+  "isNew": false
+}
